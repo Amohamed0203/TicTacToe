@@ -1,3 +1,4 @@
+import random
 board = ['-', '-', '-',
          '-', '-', '-',
          '-', '-', '-']
@@ -76,12 +77,30 @@ def switchPlayer():
     else:
         currentPlayer = 'X'
 
+#computer player
+def botOption():
+    choice = input('Type \"1\" if you would like to face a bot and enter anything else if otherwise: ')
+    if choice == '1':
+        return True
+
+def computerPlayer(board):
+    global currentPlayer
+    validAnswer = False
+    while validAnswer == False:
+        choice = random.randint(0, 8)
+        if board[choice] == '-':
+            board[choice] = '0'
+            validAnswer = True
+
 #check for win or tie again
+botOrNot = botOption()
 while gameRunning:
     printBoard(board)
-    playerInput(board)
+    if currentPlayer == 'X' or currentPlayer == 'O' and botOrNot != True:
+        playerInput(board)
+    if currentPlayer == 'O' and botOrNot == True:
+        print('Bot\'s move')
+        computerPlayer(board)
     checkWin()
     checkTie(board)
     switchPlayer()
-
-
